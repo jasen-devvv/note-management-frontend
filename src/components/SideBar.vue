@@ -23,7 +23,9 @@ export default {
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <router-link :to="{ name: 'notes' }" exact class="nav-item nav-link" active-class="active"><i class="fa fa-tachometer-alt me-2"></i>Notes</router-link>
+                <router-link :to="{ name: 'home' }" exact class="nav-item nav-link" active-class="active"><i class="fa fa-home me-2"></i>Home</router-link>
+                <router-link :to="{ name: 'about' }" exact class="nav-item nav-link" active-class="active"><i class="fa fa-question me-2"></i>About</router-link>
+                <router-link :to="{ name: 'notes' }" exact class="nav-item nav-link" active-class="active"><i class="fa fa-file-alt me-2"></i>Notes</router-link>
                 <router-link :to="{ name: 'archive' }" exact class="nav-item nav-link" active-class="active"><i class="fa fa-archive me-2"></i>Archived</router-link>
                 <router-link :to="{ name: 'favorite' }" exact class="nav-item nav-link" active-class="active"><i class="fa fa-star me-2"></i>Favorite</router-link>
             </div>
