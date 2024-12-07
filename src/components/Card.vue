@@ -1,57 +1,32 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
-import API from '../services/api';
+import { INote } from '../util/interface';
 
-type TNote = {
-    id: string,
-    title: string,
-    content: string
-}
+const props = defineProps<{ data: {index: number, note: INote} }>()
+const emit = defineEmits(['archive', 'favorite', 'delete'])
 
-const props = defineProps({
-    index: {
-        type: Number,
-        required: true
-    },
-    note: {
-        type: Object as PropType<TNote>,
-            required: true
-    }
-})
+const index = props.data.index
+const note = props.data.note
 
-const archiveNote = async (status: boolean) => {
-    try {
-        API.patch(`/notes/${props.note.id}/archive?status=${status}`)
-        console.log("Success archived")
-    } catch (error) {
-        console.log(error)
-    }
-}
+const archiveNote = () => emit('archive', {id: note.id, status: !note.archived})
+const favoriteNote = () => emit('favorite', {id: note.id, status: !note.favorite})
+const deleteNote = () => emit('delete', note.id)
 
-const deleteNote = async () => {
-    try {
-        API.delete(`/notes/${props.note.id}`)
-        console.log("Success deleted")
-    } catch (error) {
-        console.log(error)
-    }
-}
 </script>
 
 <template>
     <div class="col-sm-12 col-sm-6 col-xl-3">
         <div class="bg-secondary rounded p-4 overflow-auto">
             <div class="d-flex text-center align-items-center justify-content-between mb-4">
-                <h6 class="mb-0 text-info">Note {{ props.index + 1 }}</h6>
-                <a href="">Favorite</a>
+                <h6 class="mb-0 text-info">Note {{ index + 1 }}</h6>
+                <button @click="favoriteNote" class="btn"><i class="far fa-star"></i></button>
             </div>
             <div>
-                <h1>{{ props.note.title }}</h1>
-                <p>{{ props.note.content }}</p>
+                <h1>{{ note.title }}</h1>
+                <p>{{ note.content }}</p>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-4">
-                <button @click="archiveNote(true)" class="btn btn-small btn-success">Archive</button>
-                <router-link :to="{ name: 'edit-note', params: { id: props.note.id } }"
+                <button @click="archiveNote" class="btn btn-small btn-success">Archive</button>
+                <router-link :to="{ name: 'edit-note', params: { id: note.id } }"
                     class="btn btn-small btn-warning">Edit</router-link>
                 <button @click="deleteNote" class="btn btn-small btn-primary">Delete</button>
             </div>
