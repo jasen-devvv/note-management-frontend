@@ -2,28 +2,21 @@
 import { ref } from 'vue';
 import BreadCrumbs from '../../components/BreadCrumbs.vue';
 import API from '../../services/api';
+import { NoteForm } from '../../util/interface';
+import { useRouter } from 'vue-router';
+import { createHandler } from '../../services/noteService'
 
-interface NoteForm {
-    title: string;
-    content: string;
-}
-
+const router = useRouter()
 const form = ref<NoteForm>({
     title: '',
     content: '',
 })
 
-const goBack = () => {
-    history.back()
-}
+const goBack = () => history.back()
 
-const submitHandler = async () => {
-    try {
-        const response = await API.post('/notes', form.value)
-        console.log(response.data)
-    } catch (error) {
-        console.error(error);
-    }
+const submitHandler = async (): Promise<void> => {
+    await createHandler(form)
+    router.push({ name: 'notes' })
 }
 </script>
 
@@ -34,7 +27,7 @@ const submitHandler = async () => {
                 <h1>Title</h1>
             </div>
             <div class="col-12 col-sm-6">
-                <BreadCrumbs :data="['Home', 'Notes']" />
+                <BreadCrumbs :items="['Home', 'Notes', 'Create']" />
             </div>
         </div>
 
@@ -45,15 +38,17 @@ const submitHandler = async () => {
                     <form @submit.prevent="submitHandler">
                         <div class="mb-3">
                             <label for="title" class="form-label text-white">Title </label>
-                            <input type="text" v-model="form.title" class="form-control" id="title" placeholder="ex: Hello World" />
+                            <input type="text" v-model="form.title" class="form-control" id="title"
+                                placeholder="ex: Hello World" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="content" class="form-label text-white">Content </label>
-                            <textarea class="form-control" v-model="form.content" id="content" rows="5" placeholder="ex: Lorem Ipsum Dolor Amit"></textarea>
+                            <textarea class="form-control" v-model="form.content" id="content" rows="5"
+                                placeholder="ex: Lorem Ipsum Dolor Amit"></textarea>
                             <div class="invalid-feedback"></div>
                         </div>
-                        
+
                         <div class="d-flex align-items-center gap-3">
                             <button type="submit" class="btn btn-success">Submit</button>
                             <button @click="goBack()" type="button" class="btn btn-light">Cancel</button>

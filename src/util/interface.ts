@@ -4,6 +4,11 @@ export interface INote {
     content: string,
     archived: boolean,
     favorite: boolean,
-    created_at: string,
-    updated_at: string
+    CreatedAt: string,
+    UpdatedAt: string
+}
+
+export interface NoteForm {
+    title: string;
+    content: string;
 }

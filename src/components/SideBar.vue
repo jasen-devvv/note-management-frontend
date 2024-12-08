@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 
 const data = {
     logoName: "JDNote",
-    profilePath: "/darkpan/img/user.jpg",
+    profilePath: "/img/logo.png",
     name: "Jasen",
     role: "Programmer"
 }

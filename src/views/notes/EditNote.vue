@@ -2,50 +2,23 @@
 import { onMounted, ref } from 'vue';
 import BreadCrumbs from '../../components/BreadCrumbs.vue';
 import API from '../../services/api';
+import { NoteForm } from '../../util/interface';
+import { useRouter } from 'vue-router';
+import { note, fetchNoteByID, updateHandler } from '../../services/noteService'
 
-interface NoteForm {
-    title: string;
-    content: string;
-}
+const router = useRouter()
+const props = defineProps<{ id: string }>()
 
-const props = defineProps({
-    id: {
-        type: String,
-        required: true
-    }
-})
-
-const form = ref<NoteForm>({
-    title: '',
-    content: ''
-})
-
-const fetchNote = async (id:string) => {
-    try {
-        const response = await API.get(`/notes/${id}`)
-        form.value.title = response.data.title
-        form.value.content = response.data.content
-    } catch (error) {
-        console.log(error)
-    }
-}
+const goBack = () => history.back()
 
 const submitHandler = async () => {
-    try {
-        const response = await API.put(`/notes/${props.id}`, form.value)
-        console.log(response.data)
-    } catch (error) {
-        console.error(error);
-    }
+    await updateHandler({ id: props.id, form: note })
+    router.push({ name: 'notes' })
 }
 
-onMounted(() => {
-    fetchNote(props.id)
+onMounted(() => { 
+    fetchNoteByID(props.id)
 })
-
-const goBack = () => {
-    history.back()
-}
 
 </script>
 
@@ -56,7 +29,7 @@ const goBack = () => {
                 <h1>Edit Note {{ id }}</h1>
             </div>
             <div class="col-12 col-sm-6">
-                <BreadCrumbs :data="['Home', 'Notes']" />
+                <BreadCrumbs :items="['Home', 'Notes', 'Edit']" />
             </div>
         </div>
         
@@ -66,13 +39,13 @@ const goBack = () => {
                     <h6 class="mb-4">Create Note</h6>
                     <form @submit.prevent="submitHandler">
                         <div class="mb-3">
-                            <label for="title" class="form-label text-white">Title </label>
-                            <input type="text" class="form-control" v-model="form.title" id="title" placeholder="ex: Hello World" />
+                            <label for="title" class="form-label text-white">Title</label>
+                            <input type="text" class="form-control" v-model="note.title" id="title" placeholder="ex: Hello World" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="content" class="form-label text-white">Content </label>
-                            <textarea class="form-control" id="content" v-model="form.content" rows="5" placeholder="ex: Lorem Ipsum Dolor Amit"></textarea>
+                            <label for="content" class="form-label text-white">Content</label>
+                            <textarea class="form-control" id="content" v-model="note.content" rows="5" placeholder="ex: Lorem Ipsum Dolor Amit"></textarea>
                             <div class="invalid-feedback"></div>
                         </div>
                         
