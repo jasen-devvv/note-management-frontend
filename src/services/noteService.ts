@@ -12,6 +12,7 @@ export const loading = ref<boolean>(true)
 export const err = ref<string | null>(null)
 
 export const fetchNotes = async (): Promise<void> => {
+    notes.value = []
     loading.value = true
     err.value = null
 
@@ -33,7 +34,8 @@ export const fetchNotes = async (): Promise<void> => {
     }
 }
 
-export const fetchArchived = async (): Promise<void> => {
+export const fetchArchivedNotes = async (): Promise<void> => {
+    notes.value = []
     loading.value = true
     err.value = null
 
@@ -107,17 +109,20 @@ export const favoriteHandler = async ({ id, status }: { id: string, status: bool
             const index = notes.value.findIndex((note) => note.id === id)
             if (index !== -1) {
                 notes.value[index].favorite = status
+                const favorite = notes.value[index].favorite ? 'favorite' : 'unfavorite'
                 notes.value = sortNotes(notes.value)
-            }
 
-            const favorite = notes.value[index].favorite ? 'favorite' : 'unfavorite'
-            
-            Swal.fire({
-                title: `Success to ${favorite} note`,
-                icon: 'success',
-                timer: 2000,
-                timerProgressBar: true,
-            })
+                if (notes.value[index].archived) {
+                    notes.value.splice(index, 1)
+                }
+                
+                Swal.fire({
+                    title: `Success to ${favorite} note`,
+                    icon: 'success',
+                    timer: 2000,
+                    timerProgressBar: true,
+                })
+            }
         }
 
         

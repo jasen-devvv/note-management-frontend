@@ -1,15 +1,7 @@
-<script lang="ts">
+<script setup lang="ts">
 import NavBar from './components/NavBar.vue';
 import SideBar from './components/SideBar.vue';
 import Footer from './components/Footer.vue';
-
-export default {
-  components: {
-    SideBar,
-    NavBar,
-    Footer
-  }
-}
 </script>
 
 <template>

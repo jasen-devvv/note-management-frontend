@@ -6,7 +6,7 @@ import BreadCrumbs from '../../components/BreadCrumbs.vue';
     <div class="container-fluid pt-4 px-4">
         <div class="row mb-3">
             <div class="col-12 col-sm-6">
-                <h1>Home</h1>
+                <h2>Home</h2>
             </div>
             <div class="col-12 col-sm-6">
                 <BreadCrumbs :items="['Home', '']"/>
@@ -29,11 +29,11 @@ import BreadCrumbs from '../../components/BreadCrumbs.vue';
                     </ol>
                     <b class="text-white">Media Social Link:</b>
                     <ol>
-                        <li>Instagram: <a class="text-decoration-underline" href="#"></a></li>
-                        <li>Facebook: <a class="text-decoration-underline" href="#"></a></li>
-                        <li>X (Twitter): <a class="text-decoration-underline" href="#"></a></li>
-                        <li>Youtube: <a class="text-decoration-underline" href="#"></a></li>
-                        <li>Tiktok: <a class="text-decoration-underline" href="#"></a></li>
+                        <li>Instagram: <a class="text-decoration-underline" href="#">https://instagram.com</a></li>
+                        <li>Facebook: <a class="text-decoration-underline" href="#">https://facebook.com</a></li>
+                        <li>X (Twitter): <a class="text-decoration-underline" href="#">https://twitter.com</a></li>
+                        <li>Youtube: <a class="text-decoration-underline" href="#">https://youtube.com</a></li>
+                        <li>Tiktok: <a class="text-decoration-underline" href="#">https://tiktok.com</a></li>
                     </ol>
                     <b class="text-white">Thank you for using JD Note!</b>
                     <p>We appreciate your trust in our platform to manage and organize your notes. We hope JD Note helps you stay productive and organized. If you have any feedback or suggestions, feel free to reach out!</p>
